@@ -31,10 +31,14 @@ function getCPU() {
 }
 
 function getRAM() {
-  memTotal=`cat /proc/meminfo | grep MemTotal: | sedAll kB MemTotal: " "`
-  memFree=`cat /proc/meminfo | grep MemFree: | sedAll kB MemFree: " "`
-  memUsed=$(($memTotal - $memFree))
-  echo $(kb2gb $memUsed) / $(kb2gb $memTotal) GB
+  if [ `uname -s` = "Darwin" ]; then
+    echo "unknown"
+  elif [ `uname -s` = "Linux" ]; then
+    memTotal=`cat /proc/meminfo | grep MemTotal: | sedAll kB MemTotal: " "`
+    memFree=`cat /proc/meminfo | grep MemFree: | sedAll kB MemFree: " "`
+    memUsed=$(($memTotal - $memFree))
+    echo $(kb2gb $memUsed) / $(kb2gb $memTotal) GB
+  fi
 }
 
 function getDisk() {

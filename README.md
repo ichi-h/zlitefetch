@@ -13,6 +13,6 @@ zlitefetch
 ### zinit
 
 ```sh
-zinit ice as"program" cp"zlitefetch.sh -> zlitefetch" pick"zlitefetch"
+zinit ice atclone"chmod +x zlitefetch.zsh"
 zinit light ippee/zlitefetch
 ```

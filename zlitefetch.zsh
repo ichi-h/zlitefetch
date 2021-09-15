@@ -29,6 +29,7 @@ function display {
   user="$(whoami)@$(uname -n)"
   os=`cat /etc/os-release | grep PRETTY_NAME | sedAll PRETTY_NAME= '"'`
   karnel=`uname -rs`
+  zsh=`zsh --version`
   cpu=`lscpu | grep "Model name:" | sed -e "s/Model name: *//g"`
   disk=`getDisk`
   ram=`getRAM`
@@ -37,7 +38,7 @@ function display {
     "User   : $user"
     "OS     : $os"
     "Karnel : $karnel"
-    "Shell  : $SHELL"
+    "Shell  : $zsh"
     "CPU    : $cpu"
     "Disk   : $disk"
     "RAM    : $ram"
@@ -72,6 +73,7 @@ function display {
 
   esac
 
+  echo ""
   for ix in `seq ${#logo[@]}`; do
     echo ${logo[$ix]} ${info[$ix]}
   done

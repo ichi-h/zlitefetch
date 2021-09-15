@@ -2,12 +2,15 @@
 
 A lightweight command-line system information plugin in zsh.
 
-Displays system information on the command line when loading this plug-in.  
-Currently, only Arch Linux is supported.
+## Usage
 
-# Usage
+```sh
+zlitefetch
+```
 
-## zinit
+## Installation
+
+### zinit
 
 ```sh
 zinit light ippee/zlitefetch

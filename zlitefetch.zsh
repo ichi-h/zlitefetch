@@ -38,9 +38,25 @@ function getRAM() {
 }
 
 function getDisk() {
-  diskTotal=`df --total --output=source,size | grep total | sed -e "s/total *//g"`
-  diskUsed=`df --total --output=source,used | grep total | sed -e "s/total *//g"`
-  echo $(kb2gb $diskUsed) / $(kb2gb $diskTotal) GB
+  if [ `uname -s` = "Darwin" ]; then
+    diskTotal=$(
+      df | grep "/dev/" | awk '
+        BEGIN { size=0; }
+        $2~/[0-9]/ { size = $2; }
+        END { printf "%lu\n", size / 2; }'
+    )
+    diskUsed=$(
+      df | grep "/dev/" | awk '
+        BEGIN { used=0; }
+        $3~/[0-9]/ { used += $3; }
+        END { printf "%lu\n", used / 2; }'
+    )
+    echo $(kb2gb $diskUsed) / $(kb2gb $diskTotal) GB
+  elif [ 'uname -s' = "Linux" ]; then
+    diskTotal=`df --total --output=source,size | grep total | sed -e "s/total *//g"`
+    diskUsed=`df --total --output=source,used | grep total | sed -e "s/total *//g"`
+    echo $(kb2gb $diskUsed) / $(kb2gb $diskTotal) GB
+  fi
 }
 
 function display {

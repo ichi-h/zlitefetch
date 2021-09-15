@@ -12,6 +12,16 @@ function kb2gb() {
   bc <<< "scale=1; $1 / (1024 * 1024)"
 }
 
+function getOS() {
+  if [ `uname -s` = "Darwin" ]; then
+    name=`sw_vers -productName`
+    ver=`sw_vers -productVersion`
+    echo "$name $ver"
+  elif [ `uname -s` = "Linux" ]; then
+    echo `cat /etc/os-release | grep PRETTY_NAME | sedAll PRETTY_NAME= '"'`
+  fi
+}
+
 function getRAM() {
   memTotal=`cat /proc/meminfo | grep MemTotal: | sedAll kB MemTotal: " "`
   memFree=`cat /proc/meminfo | grep MemFree: | sedAll kB MemFree: " "`
@@ -27,7 +37,7 @@ function getDisk() {
 
 function display {
   user="$(whoami)@$(uname -n)"
-  os=`cat /etc/os-release | grep PRETTY_NAME | sedAll PRETTY_NAME= '"'`
+  os=`getOS`
   karnel=`uname -rs`
   zsh=`zsh --version`
   cpu=`lscpu | grep "Model name:" | sed -e "s/Model name: *//g"`

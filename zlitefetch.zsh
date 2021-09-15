@@ -22,6 +22,14 @@ function getOS() {
   fi
 }
 
+function getCPU() {
+  if [ `uname -s` = "Darwin" ]; then
+    echo `sysctl machdep.cpu.brand_string | sed s/"machdep.cpu.brand_string: "//g`
+  elif [ 'uname -s' = "Linux" ]; then
+    echo `lscpu | grep "Model name:" | sed -e "s/Model name: *//g"`
+  fi
+}
+
 function getRAM() {
   memTotal=`cat /proc/meminfo | grep MemTotal: | sedAll kB MemTotal: " "`
   memFree=`cat /proc/meminfo | grep MemFree: | sedAll kB MemFree: " "`
@@ -40,7 +48,7 @@ function display {
   os=`getOS`
   karnel=`uname -rs`
   zsh=`zsh --version`
-  cpu=`lscpu | grep "Model name:" | sed -e "s/Model name: *//g"`
+  cpu=`getCPU`
   disk=`getDisk`
   ram=`getRAM`
 

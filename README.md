@@ -13,5 +13,6 @@ zlitefetch
 ### zinit
 
 ```sh
+zinit ice as"program" cp"zlitefetch.sh -> zlitefetch" pick"zlitefetch"
 zinit light ippee/zlitefetch
 ```

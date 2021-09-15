@@ -1,2 +1,2 @@
 0=${(%):-%N}
-source ${0:A:h}/zlitefetch.zsh
+alias zlitefetch="${0:A:h}/zlitefetch.zsh"

@@ -32,7 +32,15 @@ function getCPU() {
 
 function getRAM() {
   if [ `uname -s` = "Darwin" ]; then
-    echo "unknown"
+    memTotal=`sysctl hw.memsize | sed -e s/"[a-zA-Z:. ]*"//g | awk '{ printf("%d\n", $1 / 1024) }'`
+
+    free=`vm_stat | grep free | awk '{ print $3 }' | sed 's/\.//'`
+    inactive=`vm_stat | grep inactive | awk '{ print $3 }' | sed 's/\.//'`
+    speculative=`vm_stat | grep speculative | awk '{ print $3 }' | sed 's/\.//'`
+    memUnused=$((($free + speculative + $inactive) * 4096 / 1024))
+    memUsed=$(($memTotal - $memUnused))
+
+    echo $(kb2gb $memUsed) / $(kb2gb $memTotal) GB
   elif [ `uname -s` = "Linux" ]; then
     memTotal=`cat /proc/meminfo | grep MemTotal: | sedAll kB MemTotal: " "`
     memFree=`cat /proc/meminfo | grep MemFree: | sedAll kB MemFree: " "`

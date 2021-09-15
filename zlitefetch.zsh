@@ -74,8 +74,14 @@ function display {
   esac
 
   echo ""
-  for ix in `seq ${#logo[@]}`; do
-    echo ${logo[$ix]} ${info[$ix]}
+  infoLen=${#info[@]}
+  logoLen=${#logo[@]}
+  for i in `seq $logoLen`; do
+    j=`echo $i $logoLen $infoLen | awk '{ printf("%d\n", $1 - ($2 / 2) + ($3 / 2) + 0.5) }'`
+    if [ $j -lt 0 ]; then
+      j=0
+    fi
+    echo ${logo[$i]} ${info[$j]}
   done
 }
 

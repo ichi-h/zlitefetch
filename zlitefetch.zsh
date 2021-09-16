@@ -25,8 +25,8 @@ function getOS() {
 function getCPU() {
   if [ `uname -s` = "Darwin" ]; then
     echo `sysctl machdep.cpu.brand_string | sed s/"machdep.cpu.brand_string: "//g`
-  elif [ 'uname -s' = "Linux" ]; then
-    echo `lscpu | grep "Model name:" | sed -e "s/Model name: *//g"`
+  elif [ `uname -s` = "Linux" ]; then
+    echo `lscpu | grep "Model name:" | sed -e "s/Model name:[ ]*//g"`
   fi
 }
 
@@ -64,7 +64,7 @@ function getDisk() {
         END { printf "%lu\n", used / 2; }'
     )
     echo $(kb2gb $diskUsed) / $(kb2gb $diskTotal) GB
-  elif [ 'uname -s' = "Linux" ]; then
+  elif [ `uname -s` = "Linux" ]; then
     diskTotal=`df --total --output=source,size | grep total | sed -e "s/total *//g"`
     diskUsed=`df --total --output=source,used | grep total | sed -e "s/total *//g"`
     echo $(kb2gb $diskUsed) / $(kb2gb $diskTotal) GB
@@ -120,6 +120,31 @@ function display {
         "${c5}    \\mMMMMMMMMMMMMMMMMMMMMd.   \e[m"
         "${c6}     \`oNMMMMMMmddmMMMMMMm+     \e[m"
         "${c6}        -++/-      -/+/-       \e[m"
+      )
+      ;;
+
+    *debian* )
+      c1="\033[0m\033[1;31m"
+      logo=(
+        "${c1}            .--.\`..\`           \e[m"
+        "${c1}        ./oyyyyyyyyys++/.      \e[m"
+        "${c1}     \`/yyyys+:.....-:+yyyy/\`   \e[m"
+        "${c1}    :yyyo:\`            :syyy:  \e[m"
+        "${c1} \` /yy/\`                \`+yyo: \e[m"
+        "${c1}  oy+\`         -::-.\`     oy+\` \e[m"
+        "${c1} /ys\`        :/.          -ys  \e[m"
+        "${c1} yy.        /-        \`   .yy. \e[m"
+        "${c1} yy         y             .y+  \e[m"
+        "${c1} ys         o:       \`   .oo\`  \e[m"
+        "${c1} sy\`       \`.+/\`  \`\`   \`:o:    \e[m"
+        "${c1} /y:        \`\`:o+:--:/o+-      \e[m"
+        "${c1} \`sy+.         \`...-\`          \e[m"
+        "${c1}  .yy+                         \e[m"
+        "${c1}   .sy:                        \e[m"
+        "${c1}     /y+\`                      \e[m"
+        "${c1}      \`+s+.                    \e[m"
+        "${c1}        \`:++:\`                 \e[m"
+        "${c1}            .-..\`              \e[m"
       )
       ;;
 

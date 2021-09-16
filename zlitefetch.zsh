@@ -25,8 +25,8 @@ function getOS() {
 function getCPU() {
   if [ `uname -s` = "Darwin" ]; then
     echo `sysctl machdep.cpu.brand_string | sed s/"machdep.cpu.brand_string: "//g`
-  elif [ 'uname -s' = "Linux" ]; then
-    echo `lscpu | grep "Model name:" | sed -e "s/Model name: *//g"`
+  elif [ `uname -s` = "Linux" ]; then
+    echo `lscpu | grep "Model name:" | sed -e "s/Model name:[ ]*//g"`
   fi
 }
 
@@ -64,7 +64,7 @@ function getDisk() {
         END { printf "%lu\n", used / 2; }'
     )
     echo $(kb2gb $diskUsed) / $(kb2gb $diskTotal) GB
-  elif [ 'uname -s' = "Linux" ]; then
+  elif [ `uname -s` = "Linux" ]; then
     diskTotal=`df --total --output=source,size | grep total | sed -e "s/total *//g"`
     diskUsed=`df --total --output=source,used | grep total | sed -e "s/total *//g"`
     echo $(kb2gb $diskUsed) / $(kb2gb $diskTotal) GB

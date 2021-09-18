@@ -9,7 +9,7 @@ function sedAll() {
 }
 
 function kb2gb() {
-  bc <<< "scale=1; $1 / (1024 * 1024)"
+  echo $1 | awk '{ printf("%4.1f", $1 / (1024 * 1024)) }'
 }
 
 function getOS() {

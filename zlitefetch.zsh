@@ -51,8 +51,17 @@ function getRAM() {
 
 function getDisk() {
   if [ `uname -r | grep WSL` ]; then
-    diskTotal=`df --output=source,size | grep "C:" | sed -e 's/C:[\\ ]*//g'`
-    diskUsed=`df --output=source,used | grep "C:" | sed -e 's/C:[\\ ]*//g'`
+    diskTotal=`df --output=source,size`
+    diskUsed=`df --output=source,used`
+
+    if [ `echo $diskTotal | grep "C:"` ]; then
+      diskTotal=`echo $diskTotal | grep "C:" | sed -e 's/C:[\\ ]*//g'`
+      diskUsed=`echo $diskUsed | grep "C:" | sed -e 's/C:[\\ ]*//g'`
+    else
+      diskTotal=`echo $diskTotal | grep "drvfs" | sed -e 's/drvfs[ ]*//g'`
+      diskUsed=`echo $diskUsed | grep "drvfs" | sed -e 's/drvfs[ ]*//g'`
+    fi
+
     echo $(kb2gb $diskUsed) / $(kb2gb $diskTotal) GB
   elif [ `uname -s` = "Darwin" ]; then
     diskTotal=$(

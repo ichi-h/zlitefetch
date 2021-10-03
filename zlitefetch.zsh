@@ -56,40 +56,43 @@ function getRAM() {
 }
 
 function getDisk() {
+  diskTotal=""
+  diskUsed=""
+
   if [ `uname -r | grep WSL` ]; then
     diskTotal=`df --output=source,size`
     diskUsed=`df --output=source,used`
 
     if [ `echo $diskTotal | grep "C:"` ]; then
-      diskTotal=`echo $diskTotal | grep "C:" | sed -e 's/C:[\\ ]*//g'`
-      diskUsed=`echo $diskUsed | grep "C:" | sed -e 's/C:[\\ ]*//g'`
+      diskTotal=`kb2gb $(echo $diskTotal | grep "C:" | sed -e 's/C:[\\ ]*//g')`
+      diskUsed=`kb2gb $(echo $diskUsed | grep "C:" | sed -e 's/C:[\\ ]*//g')`
     else
-      diskTotal=`echo $diskTotal | grep "drvfs" | sed -e 's/drvfs[ ]*//g'`
-      diskUsed=`echo $diskUsed | grep "drvfs" | sed -e 's/drvfs[ ]*//g'`
+      diskTotal=`kb2gb $(echo $diskTotal | grep "drvfs" | sed -e 's/drvfs[ ]*//g')`
+      diskUsed=`kb2gb $(echo $diskUsed | grep "drvfs" | sed -e 's/drvfs[ ]*//g')`
     fi
-
-    echo $(kb2gb $diskUsed) / $(kb2gb $diskTotal) GB
   elif [ `uname -s` = "Darwin" ]; then
-    diskTotal=$(
+    diskTotal=`kb2gb $(
       df | grep "/dev/" | awk '
         BEGIN { size=0; }
         $2~/[0-9]/ { size = $2; }
         END { printf "%lu\n", size / 2; }'
-    )
-    diskUsed=$(
+    )`
+    diskUsed=`kb2gb $(
       df | grep "/dev/" | awk '
         BEGIN { used=0; }
         $3~/[0-9]/ { used += $3; }
         END { printf "%lu\n", used / 2; }'
-    )
-    echo $(kb2gb $diskUsed) / $(kb2gb $diskTotal) GB
+    )`
   elif [ `uname -s` = "Linux" ]; then
-    diskTotal=`df --total --output=source,size | grep total | sed -e "s/total *//g"`
-    diskUsed=`df --total --output=source,used | grep total | sed -e "s/total *//g"`
-    echo $(kb2gb $diskUsed) / $(kb2gb $diskTotal) GB
+    diskTotal=`kb2gb $(df --total --output=source,size | grep total | sed -e "s/total *//g")`
+    diskUsed=`kb2gb $(df --total --output=source,used | grep total | sed -e "s/total *//g")`
   else
-    echo "unknown"
+    diskTotal="0"
+    diskUsed="0"
   fi
+
+  usageRate=`echo $diskTotal $diskUsed | awk '{ printf("%4.1f", 100 * $2 / $1) }'`
+  echo $diskUsed / $diskTotal GB "($usageRate%)"
 }
 
 function display {

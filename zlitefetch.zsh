@@ -19,6 +19,8 @@ function getOS() {
     echo "$name $ver"
   elif [ `uname -s` = "Linux" ]; then
     echo `cat /etc/os-release | grep PRETTY_NAME | sedAll PRETTY_NAME= '"'`
+  else
+    echo "unknown"
   fi
 }
 
@@ -27,6 +29,8 @@ function getCPU() {
     echo `sysctl machdep.cpu.brand_string | sed s/"machdep.cpu.brand_string: "//g`
   elif [ `uname -s` = "Linux" ]; then
     echo `lscpu | grep "Model name:" | sed -e "s/Model name:[ ]*//g"`
+  else
+    echo "unknown"
   fi
 }
 
@@ -46,6 +50,8 @@ function getRAM() {
     memFree=`cat /proc/meminfo | grep MemFree: | sedAll kB MemFree: " "`
     memUsed=$(($memTotal - $memFree))
     echo $(kb2gb $memUsed) / $(kb2gb $memTotal) GB
+  else
+    echo "unknown"
   fi
 }
 
@@ -81,6 +87,8 @@ function getDisk() {
     diskTotal=`df --total --output=source,size | grep total | sed -e "s/total *//g"`
     diskUsed=`df --total --output=source,used | grep total | sed -e "s/total *//g"`
     echo $(kb2gb $diskUsed) / $(kb2gb $diskTotal) GB
+  else
+    echo "unknown"
   fi
 }
 
@@ -183,6 +191,9 @@ function display {
         "${c2} .:.                         .:-\e[m"
       )
       ;;
+
+    *)
+      logo=("" "" "" "" "" "" "");;
 
   esac
 

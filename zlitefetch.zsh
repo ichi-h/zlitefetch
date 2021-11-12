@@ -105,13 +105,13 @@ function display {
   ram=`getRAM`
 
   info=(
-    "User   : $user"
-    "OS     : $os"
-    "Karnel : $karnel"
-    "Shell  : $zsh"
-    "CPU    : $cpu"
-    "Disk   : $disk"
-    "RAM    : $ram"
+    "  User   : $user"
+    "  OS     : $os"
+    "  Karnel : $karnel"
+    "  Shell  : $zsh"
+    "  CPU    : $cpu"
+    "  Disk   : $disk"
+    "  RAM    : $ram"
   )
 
   logo=()

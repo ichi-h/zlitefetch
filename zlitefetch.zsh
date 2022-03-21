@@ -96,6 +96,8 @@ function getDisk() {
 }
 
 function display {
+  LANG=en_US
+
   user="$(whoami)@$(uname -n)"
   os=`getOS`
   karnel=`uname -rs`

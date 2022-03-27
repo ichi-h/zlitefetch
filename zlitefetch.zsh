@@ -107,13 +107,13 @@ function display {
   ram=`getRAM`
 
   info=(
-    "  User   : $user"
-    "  OS     : $os"
-    "  Karnel : $karnel"
-    "  Shell  : $zsh"
-    "  CPU    : $cpu"
-    "  Disk   : $disk"
-    "  RAM    : $ram"
+    "${ZLITEFETCH_COLOR}  User   \e[m: $user"
+    "${ZLITEFETCH_COLOR}  OS     \e[m: $os"
+    "${ZLITEFETCH_COLOR}  Karnel \e[m: $karnel"
+    "${ZLITEFETCH_COLOR}  Shell  \e[m: $zsh"
+    "${ZLITEFETCH_COLOR}  CPU    \e[m: $cpu"
+    "${ZLITEFETCH_COLOR}  Disk   \e[m: $disk"
+    "${ZLITEFETCH_COLOR}  RAM    \e[m: $ram"
   )
 
   logo=()
@@ -227,7 +227,6 @@ function display {
 
     *)
       logo=("" "" "" "" "" "" "");;
-
   esac
 
   echo ""

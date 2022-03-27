@@ -36,20 +36,20 @@ function getCPU() {
 
 function getRAM() {
   if [ `uname -s` = "Darwin" ]; then
-    memTotal=`sysctl hw.memsize | sed -e s/"[a-zA-Z:. ]*"//g | awk '{ printf("%d\n", $1 / 1024) }'`
+    total=`sysctl hw.memsize | sed -e s/"[a-zA-Z:. ]*"//g | awk '{ printf("%d\n", $1 / 1024) }'`
 
     free=`vm_stat | grep free | awk '{ print $3 }' | sed 's/\.//'`
     inactive=`vm_stat | grep inactive | awk '{ print $3 }' | sed 's/\.//'`
     speculative=`vm_stat | grep speculative | awk '{ print $3 }' | sed 's/\.//'`
-    memUnused=$((($free + speculative + $inactive) * 4096 / 1024))
-    memUsed=$(($memTotal - $memUnused))
+    available=$((($free + speculative + $inactive) * 4096 / 1024))
+    used=$(($total - $available))
 
-    echo $(kb2gb $memUsed) / $(kb2gb $memTotal) GB
+    echo $(kb2gb $used) / $(kb2gb $total) GB
   elif [ `uname -s` = "Linux" ]; then
-    memTotal=`cat /proc/meminfo | grep MemTotal: | sedAll kB MemTotal: " "`
-    memFree=`cat /proc/meminfo | grep MemFree: | sedAll kB MemFree: " "`
-    memUsed=$(($memTotal - $memFree))
-    echo $(kb2gb $memUsed) / $(kb2gb $memTotal) GB
+    total=`cat /proc/meminfo | grep MemTotal: | sedAll kB MemTotal: " "`
+    available=`cat /proc/meminfo | grep MemAvailable: | sedAll kB MemAvailable: " "`
+    used=$(($total - $available))
+    echo $(kb2gb $used) / $(kb2gb $total) GB
   else
     echo "unknown"
   fi

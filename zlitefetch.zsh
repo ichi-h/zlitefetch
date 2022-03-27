@@ -119,6 +119,13 @@ function display {
   logo=()
   osLowerCase=`echo $os | sed 's/.\+/\L\0/'`
 
+  for arg in $@; do
+    case $arg in
+      "--off" )
+        osLowerCase=""
+    esac
+  done
+
   case $osLowerCase in
     *mac* )
       c1="\033[0m\033[32m"
@@ -235,4 +242,4 @@ function display {
   done
 }
 
-display
+display $@

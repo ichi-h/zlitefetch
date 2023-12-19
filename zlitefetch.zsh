@@ -28,7 +28,12 @@ function getCPU() {
   if [ `uname -s` = "Darwin" ]; then
     echo `sysctl machdep.cpu.brand_string | sed s/"machdep.cpu.brand_string: "//g`
   elif [ `uname -s` = "Linux" ]; then
-    echo `lscpu | grep "Model name:" | sed -e "s/Model name:[ ]*//g"`
+    cpuModel=`lscpu | grep "Model name:" | sed -e "s/Model name:[ ]*//g"`
+    if [ $cpuModel -ne "" ]; then
+      echo $cpuModel
+    else
+      echo "unknown"
+    fi
   else
     echo "unknown"
   fi

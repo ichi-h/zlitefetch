@@ -20,7 +20,7 @@ function getOS() {
   elif [ `uname -s` = "Linux" ]; then
     echo `cat /etc/os-release | grep PRETTY_NAME | sedAll PRETTY_NAME= '"'`
   else
-    echo "unknown"
+    echo "Unknown"
   fi
 }
 
@@ -32,10 +32,10 @@ function getCPU() {
     if [ $cpuModel -ne "" ]; then
       echo $cpuModel
     else
-      echo "unknown"
+      echo "Unknown"
     fi
   else
-    echo "unknown"
+    echo "Unknown"
   fi
 }
 
@@ -56,7 +56,7 @@ function getRAM() {
     used=$(($total - $available))
     echo $(kb2gb $used) / $(kb2gb $total) GB
   else
-    echo "unknown"
+    echo "Unknown"
   fi
 }
 

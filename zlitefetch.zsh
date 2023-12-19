@@ -230,6 +230,30 @@ function display {
       )
       ;;
 
+    *fedora* )
+      blue="\033[0m\033[1;36m"
+      white="\033[0m\033[37m"
+      logo=(
+        "${blue}           .^!7?JYYYYYYJ?7!^.          \e[m"
+        "${blue}        :!?YYYYYYYYYYYYYYYYYY?!:       \e[m"
+        "${blue}     .~JYYYYYYYYYYYYYYYYYYYYYYYYJ~.    \e[m"
+        "${blue}    ~JYYYYYYYYYYYYYY${white}5PGBGGP5${blue}YYYYYYJ~   \e[m"
+        "${blue}   7YYYYYYYYYYYYYY${white}5B@@@&&@@&B5${blue}YYYYYY7  \e[m"
+        "${blue}  7YYYYYYYYYYYYYYY${white}&@@B5${blue}YY${white}5B@@&${blue}YYYYYYY7 \e[m"
+        "${blue} ~YYYYYYYYYYYYYYY${white}5@@@5${blue}YYYY${white}5&@&5${blue}YYYYYYY~\e[m"
+        "${blue} JYYYYYYYYYYYYYYY${white}5@@@5${blue}YYYYY${white}555${blue}YYYYYYYYJ\e[m"
+        "${blue} YYYYYYYYY${white}PGB###${blue}G${white}5@@@####5${blue}YYYYYYYYYYYYY\e[m"
+        "${blue} YYYYYYY${white}G&@@&###${blue}P${white}5@@@####5${blue}YYYYYYYYYYYYJ\e[m"
+        "${blue} YYYYYY${white}B@@#5${blue}YYYYY${white}5@@@5${blue}YYYYYYYYYYYYYYYY!\e[m"
+        "${blue} YYYYYY${white}@@@5J${blue}YYYYY${white}5@@@5${blue}YYYYYYYYYYYYYYY? \e[m"
+        "${blue} YYYYYY${white}B@@#P${blue}YYYY${white}P#@@B${blue}YYYYYYYYYYYYYYY7  \e[m"
+        "${blue} YYYYYYY${white}G&@@@&&&@@&G${blue}YYYYYYYYYYYYYYJ~   \e[m"
+        "${blue} YYYYYYYYY${white}5GBBBBG5${blue}YYYYYYYYYYYYYYJ~.    \e[m"
+        "${blue} JYYYYYYYYYYYYYYYYYYYYYYYYYYY?!^       \e[m"
+        "${blue} .!JYYYYYYYYYYYYYYYYYYYJ?7!^.          \e[m"
+      )
+      ;;
+
     *)
       logo=("" "" "" "" "" "" "");;
   esac
